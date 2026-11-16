@@ -240,7 +240,7 @@ export default function BatchesPage() {
                 className="space-y-5 p-6"
               >
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700">
+                <label className="mb-2 block text-sm font-medium text-gray-700">
                     Product (leave blank to keep current)
                   </label>
                   <select
@@ -274,42 +274,43 @@ export default function BatchesPage() {
                     ))}
                   </select>
                 </div>
+<div className="grid grid-cols-2 gap-4">
+  <div>
+    <label className="mb-2 block text-sm font-medium text-gray-700">
+      Quantity (kg)
+    </label>
+    <input
+      type="number"
+      value={quantityUpdate}
+      onChange={(e) => setQuantityUpdate(e.target.value)}
+      className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3"
+    />
+  </div>
 
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700">
-                    Quantity (kg)
-                  </label>
-                  <input
-                    type="number"
-                    value={quantityUpdate}
-                    onChange={(e) => setQuantityUpdate(e.target.value)}
-                    className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-gray-800 outline-none focus:border-blue-500 focus:bg-white"
-                  />
-                </div>
+  <div>
+    <label className="mb-2 block text-sm font-medium text-gray-700">
+      Production date
+    </label>
+    <input
+      type="date"
+      value={productionDateUpdate}
+      onChange={(e) => setProductionDateUpdate(e.target.value)}
+      className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3"
+    />
+  </div>
 
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700">
-                    Production date
-                  </label>
-                  <input
-                    type="date"
-                    value={productionDateUpdate}
-                    onChange={(e) => setProductionDateUpdate(e.target.value)}
-                    className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-gray-800 outline-none focus:border-blue-500 focus:bg-white"
-                  />
-                </div>
-
-                <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700">
-                    Cost ($)
-                  </label>
-                  <input
-                    type="number"
-                    value={costUpdate}
-                    onChange={(e) => setCostUpdate(e.target.value)}
-                    className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-gray-800 outline-none focus:border-blue-500 focus:bg-white"
-                  />
-                </div>
+  <div className="col-span-2">
+    <label className="mb-2 block text-sm font-medium text-gray-700">
+      Cost ($)
+    </label>
+    <input
+      type="number"
+      value={costUpdate}
+      onChange={(e) => setCostUpdate(e.target.value)}
+      className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3"
+    />
+  </div>
+</div>
 
                 <div>
                   <label className="mb-2 block text-sm font-medium text-gray-700">
@@ -414,7 +415,7 @@ export default function BatchesPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm text-gray-600 mb-1">
                 Quantity (kg)
@@ -437,6 +438,7 @@ export default function BatchesPage() {
                 className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none focus:border-green-600"
               />
             </div>
+            </div>
             <div>
               <label className="block text-sm text-gray-600 mb-1">
                 Cost ($)
@@ -448,7 +450,7 @@ export default function BatchesPage() {
                 className="w-full border border-gray-300 rounded-md px-3 py-2 outline-none focus:border-green-600"
               />
             </div>
-          </div>
+          
 
           {error && <p className="text-red-600 text-sm">{error}</p>}
 
