@@ -30,9 +30,7 @@ const REPORT_ITEMS: { key: NavKey; label: string; href: string }[] = [
   { key: "reports", label: "Reports", href: "/reports" },
 ];
 
-// Ordered to match how a new factory actually works, not alphabetically:
-// set up what you make and what you have (Catalogue) before you can
-// start a batch or run a quality check (Operations).
+
 const SETUP_ITEMS: { key: NavKey; label: string; href: string }[] = [
   { key: "products", label: "Products", href: "/products" },
   { key: "rawMaterials", label: "Raw Materials", href: "/rawMaterials" },
@@ -43,7 +41,6 @@ const OPERATIONS_ITEMS: { key: NavKey; label: string; href: string }[] = [
   { key: "qualityLab", label: "Quality Lab", href: "/qualityLab" },
 ];
 
-// Only rendered for platform admins (see isAdmin below).
 const ADMIN_ITEMS: { key: NavKey; label: string; href: string }[] = [
   { key: "admin", label: "Admin Console", href: "/admin" },
 ];
@@ -65,15 +62,10 @@ export default function AppShell({
   const [notifOpen, setNotifOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  // Two separate states on purpose, so Tailwind breakpoints (not JS) decide
-  // which one matters. That avoids hydration mismatches from reading the
-  // window width during render.
-  //   desktopOpen: sidebar sits in the layout on md+ screens (default open)
-  //   mobileOpen:  sidebar slides OVER the page on small screens (default closed)
+
   const [desktopOpen, setDesktopOpen] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Remember the desktop choice across pages (each page mounts its own AppShell).
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     if (localStorage.getItem("sidebar-open") === "false") setDesktopOpen(false);
@@ -101,8 +93,7 @@ export default function AppShell({
       setFactoryName(factories?.[0]?.name ?? null);
     }
 
-    // Real alerts, computed the same way as the dashboard — not mock copy.
-    // Shown here too so they're reachable from any page, not just /dashboard.
+
     async function loadAlerts() {
       const { data: batchesData } = await supabase
         .from("batches")
@@ -128,8 +119,7 @@ export default function AppShell({
       setExpiringAlerts(soon as { id: string; name: string; expiry_date: string }[]);
     }
 
-    // RLS only lets a user read their own platform_admins row, so a row
-    // coming back means "I'm an admin". Only affects whether the link shows.
+
     async function loadAdminFlag() {
       const { data } = await supabase.from("platform_admins").select("user_id").maybeSingle();
       setIsAdmin(!!data);
@@ -142,8 +132,6 @@ export default function AppShell({
 
   const alertCount = failedAlerts.length + expiringAlerts.length;
 
-  // Debounced search: waits 300ms after typing stops before querying,
-  // so we don't send a request on every keystroke.
   useEffect(() => {
     const query = searchQuery.trim();
     if (query.length < 2) {

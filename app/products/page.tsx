@@ -69,8 +69,7 @@ export default function ProductsPage() {
     if (id) setHighlightId(id);
   }, []);
 
-  // Once the rows are on screen, scroll to the highlighted one, then
-  // fade the highlight out after 3 seconds.
+
   useEffect(() => {
     if (!highlightId || products.length === 0) return;
     document.getElementById(`row-${highlightId}`)?.scrollIntoView({
@@ -257,7 +256,7 @@ export default function ProductsPage() {
           </div>
         )}
 
-        <h1 className="text-2xl font-bold mb-6">Products</h1>
+        <h1 className="text-2xl text-shadow-black font-bold mb-6">Products</h1>
 
         <form
           onSubmit={handleAdd}

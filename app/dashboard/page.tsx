@@ -96,7 +96,6 @@ export default function DashboardPage() {
   const evaluatedCount = passedCount + failedCount;
   const successRate = evaluatedCount > 0 ? Math.round((passedCount / evaluatedCount) * 100) : null;
 
-  // --- Pie: batches grouped by status ---
   const statusCounts = batches.reduce<Record<string, number>>((acc, b) => {
     acc[b.status] = (acc[b.status] ?? 0) + 1;
     return acc;
@@ -106,7 +105,6 @@ export default function DashboardPage() {
     value: count,
   }));
 
-  // --- Bar: total cost grouped by product name ---
   const costByProduct = batches.reduce<Record<string, number>>((acc, b) => {
     const name = b.products?.name ?? "Unassigned";
     acc[name] = (acc[name] ?? 0) + (b.cost ?? 0);
@@ -116,7 +114,6 @@ export default function DashboardPage() {
     .map(([name, cost]) => ({ name, cost }))
     .sort((a, b) => b.cost - a.cost);
 
-  // --- Line: total quantity produced grouped by month ---
   const quantityByMonth = batches.reduce<Record<string, number>>((acc, b) => {
     if (!b.production_date) return acc;
     const monthIndex = new Date(b.production_date).getMonth();
@@ -128,7 +125,6 @@ export default function DashboardPage() {
     (month) => ({ month, quantity: quantityByMonth[month] })
   );
 
-  // --- Stage ribbon: how many batches sit in each status ---
   const STAGES: { key: string; label: string }[] = [
     { key: "pending", label: "Pending" },
     { key: "testing", label: "Testing" },
@@ -137,7 +133,6 @@ export default function DashboardPage() {
     { key: "completed", label: "Completed" },
   ];
 
-  // --- Real alerts, derived from actual data (no fake copy) ---
   const failedBatchAlerts = batches
     .filter((b) => b.status === "failed")
     .map((b) => b.products?.name ?? "Unknown product");
@@ -164,15 +159,15 @@ export default function DashboardPage() {
     <AppShell active="dashboard" title="Dashboard" subtitle="Live data from your factory">
       {/* KPIs */}
       <div className="grid grid-cols-4 border border-gray-200 rounded-lg overflow-hidden bg-white mb-6">
-        <div className="p-5 border-r border-gray-200">
+        <div className="p-3 border-r border-gray-200">
           <p className="text-xs text-gray-500">Products in catalogue</p>
           <p className="text-3xl font-bold mt-1 tracking-tight">{productCount}</p>
         </div>
-        <div className="p-5 border-r border-gray-200">
+        <div className="p-3 border-r border-gray-200">
           <p className="text-xs text-gray-500">Batches produced</p>
           <p className="text-3xl font-bold mt-1 tracking-tight">{totalBatches}</p>
         </div>
-        <div className="p-5 border-r border-gray-200">
+        <div className="p-3 border-r border-gray-200">
           <p className="text-xs text-gray-500">Success rate</p>
           <p className="text-3xl font-bold mt-1 tracking-tight">
             {successRate != null ? `${successRate}%` : "—"}
@@ -181,7 +176,7 @@ export default function DashboardPage() {
             <p className="text-xs text-gray-400 mt-1">No batches tested yet</p>
           )}
         </div>
-        <div className="p-5">
+        <div className="p-3">
           <p className="text-xs text-gray-500">Total cost</p>
           <p className="text-3xl font-bold mt-1 tracking-tight">
             ${totalCost.toLocaleString()}
